@@ -57,18 +57,24 @@ services_install:
 	bin/python3.4 manage.py loaddata metrics events common references visualizations;\
 
 adhocracy3:
-	git clone git@github.com:liqd/adhocracy3.git
+	git clone https://github.com/liqd/adhocracy3.mercator.git adhocracy3
 
 adhocracy3_pyenv: adhocracy3 nix_build
 	[ ! -f ./adhocracy3/bin/python3.4 ] && ./nix/env/bin/pyvenv-3.4 adhocracy3 || true
 
-adhocracy_install: adhocracy3 nix_build adhocracy3_pyenv
+adhocracy_git: adhocracy3 nix_build adhocracy3_pyenv
 	cd adhocracy3 &&\
 	git pull &&\
 	git submodule init &&\
 	git submodule update
-	cd adhocracy3 && ./bin/python ./bootstrap.py
-	cd adhocracy3 && ./bin/buildout
+
+adhocracy3/bin/buildout: adhocracy3
+	cd adhocracy3 && python3 ./bootstrap.py -v 2.3.1 --setuptools-version=12.1
+
+adhocracy_install: export LD_LIBRARY_PATH=$(dir $(realpath nix/env/lib/libmagic.so))
+adhocracy_install: adhocracy3/bin/buildout adhocracy_git
+	cd adhocracy3 && bin/buildout
+
 
 carneades_install: nix_build
 	export PATH=$(PATH):`(gem env gempath | cut -d ':' -f 2 )`/bin ;\
@@ -97,4 +103,4 @@ fcmmanager_install:
 print-python-syspath:
 	./bin/python -c 'import sys,pprint;pprint.pprint(sys.path)'
 
-.PHONY: print-python-syspath test_install test_pyvenv frontend_install nix_build adhocracy_install adhocracy3_pyenv postgres_init fcmmanager_install all
+.PHONY: print-python-syspath test_install test_pyvenv frontend_install nix_build adhocracy_git adhocracy_install adhocracy3_pyenv postgres_init fcmmanager_install all
