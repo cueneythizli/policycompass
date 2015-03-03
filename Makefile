@@ -17,7 +17,7 @@ update_repros:
 
 nix_build:
 	. ~/.nix-profile/etc/profile.d/nix.sh ;\
-	nix-channel --add http://nixos.org/channels/nixos-14.04 nixos ;\
+	nix-channel --add http://nixos.org/channels/nixos-14.12 nixos ;\
 	nix-channel --update ; \
 	nix-build --out-link nix/env -I $(NIX_PATH)
 
