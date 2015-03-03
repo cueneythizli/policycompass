@@ -4,6 +4,8 @@ NIX_PATH=~/.nix-defexpr/channels/nixos
 export PATH := $(PWD)/nix/env/bin:$(PATH)
 # setup ssl certificate paths for git in nix env (this is an issue of nix)
 export GIT_SSL_CAINFO := $(PWD)/nix/env/etc/ca-bundle.crt
+export C_INCLUDE_PATH := $(PWD)/nix/env/include:$(C_INCLUDE_PATH)
+export LIBRARY_PATH := $(LIBRARY_PATH):/lib:/lib64:/usr/lib:$(PWD)/nix/env/lib
 
 all: update_repros nix_build test_pyvenv test_install frontend_install services_pyvenv postgres_init services_install fcmmanager_install
 

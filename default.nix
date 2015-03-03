@@ -108,6 +108,9 @@ in let
         sqlite
         stdenv
         zlib
+        curl
+        gcc
+        file         # includes libmagic
    ];
 
    devtools = [
@@ -119,7 +122,10 @@ in let
     # install dependencies
     adhocracy_dependencies = [
         ruby
+        libffi
         graphviz
+        glibc        # includes ldconfig to find libmagic
+
     ];
 
     carneades_dependencies = [
