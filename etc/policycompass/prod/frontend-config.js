@@ -14,6 +14,7 @@ var policyCompassConfig = {
     'VISUALIZATIONS_MANAGER_URL': 'https://services-prod.policycompass.eu/api/v1/visualizationsmanager',
     'EVENTS_MANAGER_URL': 'https://services-prod.policycompass.eu/api/v1/eventsmanager',
     'REFERENCE_POOL_URL': 'https://services-prod.policycompass.eu/api/v1/references',
+    'INDICATOR_SERVICE_URL': 'https://services-prod.policycompass.eu/api/v1/indicatorservice',
     'FCM_URL': 'https://alpha.policycompass.eu/api/v1/fcmmanager',
     'ELASTIC_URL' : 'https://search-prod.policycompass.eu/',
     'ELASTIC_INDEX_NAME' : 'policycompass_search',
