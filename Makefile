@@ -36,7 +36,7 @@ install_deps: install_deps_ubuntu install_elasticsearch_ubuntu /usr/bin/node
 UBUNTU_PACKAGES= maven tomcat7 libxml2 libxslt1.1 libzip2 python3 python3-pil python3-pip          \
                  python-virtualenv python3-ipdb python3-pep8 pyflakes sqlite build-essential zlibc \
                  curl file git ruby ruby-dev nodejs npm openjdk-7-jdk phantomjs supervisor nginx   \
-                 postgresql ruby-compass
+                 postgresql ruby-compass libpq-dev
 
 /usr/bin/node:
 	ln -sfT /usr/bin/nodejs /usr/bin/node
@@ -94,6 +94,9 @@ services_install: policycompass-services/bin/python3.4
 	policycompass-services/bin/pip3.4 install --upgrade wheel
 	policycompass-services/bin/pip3.4 install --download-cache cache/downloads -r policycompass-services/requirements.txt
 	ln -sfT ../../etc/policycompass/$(CONFIG_TYPE)/services-settings.py policycompass-services/config/settings.py
+ifeq ($(POSTGRES_DEDICATED), true)
+	sed "s#'PORT': 5433#'PORT': 5432#" policycompass-fcmmanager/src/main/resources/hibernate.cfg.template.xml > policycompass-fcmmanager/src/main/resources/hibernate.cfg.xml
+endif
 	cd policycompass-services && bin/python3.4 manage.py migrate
 	cd policycompass-services && bin/python3.4 manage.py loaddata datasets indicators events common references visualizations
 

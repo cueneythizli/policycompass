@@ -4,22 +4,13 @@ from .settings_basic import *
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'pcompass.db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pcompass',
+        'HOST': 'localhost',
+        'PORT': 5433,
+        'USER': 'pcompass',
     }
 }
-
-# Database config example for PostgreSQL
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'pcompass',
-#         'USER': 'pcompass',
-#         'PASSWORD': 'password',
-#         'HOST': 'localhost',
-#     }
-# }
 
 ELASTICSEARCH_URL = 'http://localhost:9200/policycompass_search/'
 
